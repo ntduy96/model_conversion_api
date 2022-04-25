@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         Int      @id @default(autoincrement())
+  name       String   @default("") @db.VarChar(128)
+  email      String   @default("") @db.VarChar(128)
+  password   String   @default("") @db.VarChar(128)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  file       file[]
+}
+
+model file {
+  id          Int      @id @default(autoincrement()) @db.UnsignedInt
+  name        String   @default("") @db.VarChar(128)
+  upload_uri  String   @default("") @db.VarChar(128)
+  convert_uri String   @default("") @db.VarChar(128)
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  user_id     Int
+  user        user     @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "file_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
