@@ -6,6 +6,7 @@
    "private": true,
    "license": "UNLICENSED",
    "scripts": {
+      "heroku-prebuild": "echo This runs before Heroku installs dependencies.",
       "prebuild": "rimraf dist",
       "build": "nest build",
       "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
